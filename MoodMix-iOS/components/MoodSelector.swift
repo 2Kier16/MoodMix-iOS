@@ -5,13 +5,13 @@
 //  Created by Penny on 3/27/26.
 //
 
+
 import SwiftUI
 
 struct MoodSelector: View {
     let selectedMood: String
     var onMoodSelected: (String) -> Void
 
-    // Using clean strings and Apple's SF Symbols!
     private let moods: [(label: String, icon: String, color: Color)] = [
         ("Sad", "cloud.rain.fill", Color(red: 0x4A/255, green: 0x90/255, blue: 0xE2/255)),
         ("Happy", "sun.max.fill", Color(red: 0xBA/255, green: 0x55/255, blue: 0xD3/255)),
@@ -21,7 +21,6 @@ struct MoodSelector: View {
         ("Anxious", "wind", Color(red: 0xFF/255, green: 0x69/255, blue: 0xB4/255))
     ]
 
-    // This creates 3 perfectly equal columns!
     private let columns = [
         GridItem(.flexible()),
         GridItem(.flexible()),
@@ -29,7 +28,6 @@ struct MoodSelector: View {
     ]
 
     var body: some View {
-        // LazyVGrid automatically makes all items the exact same width
         LazyVGrid(columns: columns, spacing: 12) {
             ForEach(moods, id: \.label) { item in
                 MoodButton(
@@ -44,4 +42,3 @@ struct MoodSelector: View {
         .padding()
     }
 }
-

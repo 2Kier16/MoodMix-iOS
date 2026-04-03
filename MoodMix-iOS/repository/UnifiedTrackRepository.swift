@@ -5,7 +5,7 @@
 //  Created by Penny on 3/27/26.
 //
 import Foundation
-import MediaPlayer // <--- THIS IS THE REQUIRED LINE!
+import MediaPlayer
 
 class UnifiedTrackRepository {
     // I updated these names to match your actual file names
@@ -32,7 +32,7 @@ class UnifiedTrackRepository {
         case "happy":     targetGenres = ["Pop", "Happy", "Disco", "Funk"]
         case "angry":     targetGenres = ["Rock", "Metal", "Punk", "Alternative"]
         case "anxious":   targetGenres = ["Lo-Fi", "Instrumental", "Soundtrack", "Focus"]
-        default:          targetGenres = ["Pop", "Rock", "HipHop"]
+        default:          targetGenres = ["Pop", "Rock"]
         }
         
         // 3. Search the user's phone for downloaded/synced music

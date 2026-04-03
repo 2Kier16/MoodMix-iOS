@@ -1,6 +1,6 @@
 //
 //  MoodBrainViewModel.swift
-//  MoodMix-iOSi can
+//  MoodMix-iOS
 //
 //  Created by Penny on 3/26/26.
 //
@@ -12,20 +12,15 @@ class MoodBrainViewModel: ObservableObject {
     
     // Repositories
     private let trackRepository = UnifiedTrackRepository()
-    
-    // Media Player (This replaces MusicPlayerManager)
     private var mediaPlayer: MediaPlayerViewModel = MediaPlayerViewModel.shared
     
     // Published States
     @Published var nowPlaying = NowPlayingState()
     @Published var tracks: [UnifiedTrack] = []
-    
-    // REMOVED THE EMOJI HERE SO IT MATCHES THE NEW BUTTONS
     @Published var selectedMood: String = "Calm"
     @Published var isLoading: Bool = false
     
     private var cancellables = Set<AnyCancellable>()
-    
     private var isPrefetching = false
 
     init() {
@@ -33,7 +28,6 @@ class MoodBrainViewModel: ObservableObject {
     }
 
     private func setupObservers() {
-        // Observe changes from the media player to update the UI
         mediaPlayer.$currentTrack
             .receive(on: RunLoop.main)
             .sink { [weak self] track in
@@ -62,7 +56,6 @@ class MoodBrainViewModel: ObservableObject {
             .sink { [weak self] idx in
                 guard let self = self else { return }
                 let remaining = self.mediaPlayer.playlistCount - idx - 1
-                // Prefetch when 2 or fewer tracks remain
                 if remaining <= 2, !self.isPrefetching {
                     self.isPrefetching = true
                     Task { [weak self] in
@@ -88,9 +81,7 @@ class MoodBrainViewModel: ObservableObject {
         self.mediaPlayer.stop()
         self.tracks = []
 
-        // We use the UnifiedTrackRepository to do the heavy lifting
         let fetchedTracks = await trackRepository.getTracksForMood(mood: mood)
-        
         self.tracks = fetchedTracks
         
         if !fetchedTracks.isEmpty {
